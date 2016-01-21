@@ -6,7 +6,7 @@
 
     using Data.Models;
     using Data.Repositories;
-    using Filters;
+    using Infrastructure.Filters;
     using ViewModels.Create;
 
     public class ProductsController : Controller

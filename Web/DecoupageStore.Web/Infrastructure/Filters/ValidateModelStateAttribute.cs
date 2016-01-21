@@ -1,4 +1,4 @@
-﻿namespace DecoupageStore.Web.Filters
+﻿namespace DecoupageStore.Web.Infrastructure.Filters
 {
     using System.Web.Mvc;
 

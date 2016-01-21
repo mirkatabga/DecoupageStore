@@ -223,8 +223,8 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\TempController.cs" />
-    <Compile Include="Extensions\SubmitExtensions.cs" />
-    <Compile Include="Filters\ValidateModelStateAttribute.cs" />
+    <Compile Include="Infrastructure\Extensions\SubmitExtensions.cs" />
+    <Compile Include="Infrastructure\Filters\ValidateModelStateAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -311,6 +311,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Styles\" />
     <Folder Include="ViewModels\Edit\" />
     <Folder Include="ViewModels\View\" />
   </ItemGroup>

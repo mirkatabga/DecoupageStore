@@ -1,5 +1,5 @@
 ﻿@model DecoupageStore.Web.ViewModels.Create.CreateProductModel
-
+@using DecoupageStore.Web.Infrastructure.Extensions;
 @{
     ViewBag.Title = "Create";
 }
@@ -43,7 +43,7 @@
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" name="submit" class="btn btn-primary" value="Create" />
+            @Html.Submit("Create", new { @class = "btn btn-primary" })
         </div>
     </div>
 }

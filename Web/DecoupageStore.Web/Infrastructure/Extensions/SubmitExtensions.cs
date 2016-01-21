@@ -1,4 +1,4 @@
-﻿namespace DecoupageStore.Web.Extensions
+﻿namespace DecoupageStore.Web.Infrastructure.Extensions
 {
     using System.Collections.Generic;
     using System.Web.Mvc;
@@ -11,7 +11,7 @@
             input.Attributes.Add("type", "submit");
             input.Attributes.Add("value", displayText);
 
-            var attributes = (IDictionary<string, string>)HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes);
+            var attributes = (IDictionary<string, object>)HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes);
             input.MergeAttributes(attributes);
 
             return new MvcHtmlString(input.ToString());
