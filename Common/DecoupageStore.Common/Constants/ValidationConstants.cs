@@ -9,5 +9,6 @@
         public const int maxMaterialLenght = 30;
         public const int maxFileSize = 8388608; //bytes -> 8192 KB -> 8 MB
         public const int minFileSize = 0;
+        public const int maxImageCount = 9;
     }
 }

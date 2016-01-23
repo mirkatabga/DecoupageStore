@@ -1,4 +1,4 @@
-﻿namespace DecoupageStore.Common.ValidationAttributes
+﻿namespace DecoupageStore.Web.Infrastructure.ValidationAttributes
 {
     using System.Web;
     using System.ComponentModel.DataAnnotations;

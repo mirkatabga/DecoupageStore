@@ -36,9 +36,13 @@
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.File, new { @class = "control-label col-md-2" })
+        @Html.LabelFor(m => m.Images, new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-           <input type="file" name="File" class="form-control" />
+            <span class="btn btn-default btn-file">
+                Browse...
+                <input id="upload" type="file" name="Images" multiple>
+            </span>
+            @Html.TextBox("tb-files-names", null, new { id = "tb-files-names", @class = "form-control", @readonly = "" })
         </div>
     </div>
     <div class="form-group">
@@ -46,5 +50,21 @@
             @Html.Submit("Create", new { @class = "btn btn-primary" })
         </div>
     </div>
+
+    @section styles{
+        <link href="~/Styles/style-main.css" rel="stylesheet" />
+    }
+
+    @section scripts{
+        <script src="~/Scripts/app-scripts/photo-upload-ui-helper.js"></script>
+        <script>
+            $("document").ready(function (event) {
+                $("#upload").change(function (event) {
+                    var fileNamesStr = fileUploadHelper.getFilesNamesAsOneString(event.currentTarget.files, "*");
+                    $("#tb-files-names").val(fileNamesStr);
+                })
+            });
+        </script>
+    }
 }
 

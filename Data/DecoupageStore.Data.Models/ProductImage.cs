@@ -14,10 +14,10 @@
 
         [Required]
         [Range(ValidationConstants.minFileSize, ValidationConstants.maxFileSize)]
-        public int Size { get; set; }
+        public long Size { get; set; }
 
         [Required]
-        public string Format { get; set; }
+        public string ContentType { get; set; }
 
         public int ProductId { get; set; }
 

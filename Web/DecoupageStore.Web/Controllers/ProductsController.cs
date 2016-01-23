@@ -1,6 +1,9 @@
 ﻿namespace DecoupageStore.Web.Controllers
 {
+    using System;
+    using System.IO;
     using System.Linq;
+    using System.Web;
     using System.Web.Mvc;
     using Microsoft.AspNet.Identity;
 
@@ -11,11 +14,11 @@
 
     public class ProductsController : Controller
     {
-        private readonly IRepository<User> usersRepository;
+        private readonly IRepository<Product> productRepository;
 
-        public ProductsController(IRepository<User> userRepository)
+        public ProductsController(IRepository<Product> productRepository)
         {
-            this.usersRepository = userRepository;
+            this.productRepository = productRepository;
         }
 
         public ActionResult Index()
@@ -36,33 +39,43 @@
         [ValidateModelState]
         public ActionResult Create(CreateProductModel model)
         {
-            string currUserId = this.User.Identity.GetUserId();
-
-            User currentUser = usersRepository
-                .All()
-                .FirstOrDefault(usr => usr.Id == currUserId);
+            string userId = User.Identity.GetUserId();
 
             Product product = new Product
             {
+                Name = model.Name,
                 Category = model.Category,
                 Material = model.Material,
-                Name = model.Name,
                 DaysToManufacture = model.DaysToManufacture,
-                FinishedGoodsFlag = model.FinishedGoodsFlag
+                UserId = userId
             };
 
-            ProductImage prodImage = new ProductImage
+            this.productRepository.Add(product);
+            this.productRepository.SaveChanges();
+
+            string directory = Server.MapPath(
+                String.Format(@"~/Images/{0}/Products/{1}/", userId, product.Id));
+
+            Directory.CreateDirectory(directory);
+
+            foreach (HttpPostedFileBase image in model.Images)
             {
-                Path = @"D:\Temp\" + model.File.FileName,
-                Format = model.File.FileName.Split(new char[] { '.' })[1],
-                Size = model.File.ContentLength
-            };
+                string formatExtension = Path.GetExtension(image.FileName);
+                string imageNewName = Guid.NewGuid().ToString() + formatExtension;
+                string fullPath = Path.Combine(directory, imageNewName);
 
-            product.Images.Add(prodImage);
-            currentUser.Products.Add(product);
+                image.SaveAs(fullPath);
 
-            usersRepository.SaveChanges();
-            usersRepository.Dispose();
+                product.Images.Add(new ProductImage
+                {
+                    Path = fullPath,
+                    ContentType = image.ContentType,
+                    Size = image.InputStream.Length
+                });              
+            }
+
+            this.productRepository.SaveChanges();
+            this.productRepository.Dispose();
 
             return RedirectToAction("Index", "Products");
         }
