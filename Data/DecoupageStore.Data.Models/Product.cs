@@ -22,6 +22,12 @@
         [StringLength(ValidationConstants.productNameMaxLenght)]
         public string Name { get; set; }
 
+        [Range(ValidationConstants.minProductPrice, int.MaxValue)]
+        public decimal Price { get; set; }
+
+        [DefaultValue(false)]
+        public bool Negotiable { get; set; }
+
         [Required]
         [StringLength(ValidationConstants.maxMaterialLenght)]
         public string Material { get; set; }

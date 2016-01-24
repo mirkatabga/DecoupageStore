@@ -5,37 +5,33 @@
     using Data.Repositories;
     using System.Linq;
     using System.IO;
+    using Microsoft.AspNet.Identity.EntityFramework;
+    using Data;
 
     class Startup
     {
         static void Main(string[] args)
         {
-            IRepository<Product> products = new Repository<Product>(new Data.DecoupageStoreDbContext());
-            IRepository<User> users = new Repository<User>(new Data.DecoupageStoreDbContext());
+            //    using (DecoupageStoreDbContext dbContext = new DecoupageStoreDbContext())
+            //    {
+            //        IdentityRole adminRole = dbContext.Roles
+            //            .Where(r => r.Name == "Admin")
+            //            .FirstOrDefault();
 
-            User user = users
-                .All()
-                .FirstOrDefault();
+            //        User admin = dbContext.Users
+            //            .Where(usr => usr.UserName == "Admin")
+            //            .FirstOrDefault();
 
-            string userId = user.Id;
-            Console.WriteLine(userId);
+            //        IdentityUserRole userRole = new IdentityUserRole
+            //        {
+            //            RoleId = adminRole.Id,
+            //            UserId = admin.Id
+            //        };
 
-            Product product = new Product
-            {
-                Name = "Product1",
-                Category = "Bottle",
-                Material = "Glass",
-                DaysToManufacture = 2,
-                FinishedGoodsFlag = false
-            };
+            //        admin.Roles.Add(userRole);
 
-            products.Add(product);
-            products.SaveChanges();
-
-            product.UserId = userId;
-            products.SaveChanges();
-
-            Console.WriteLine(product.Id);
+            //        dbContext.SaveChanges();
+            //    }
         }
     }
 }

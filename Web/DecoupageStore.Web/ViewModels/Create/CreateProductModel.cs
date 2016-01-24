@@ -1,6 +1,7 @@
 ﻿namespace DecoupageStore.Web.ViewModels.Create
 {
     using System.Web;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.Collections.Generic;
 
@@ -13,6 +14,12 @@
         [StringLength(ValidationConstants.productNameMaxLenght,
             ErrorMessage = "The name of the product must be between {1} and {2} characters.", MinimumLength = 3)]
         public string Name { get; set; }
+
+        [Range(ValidationConstants.minProductPrice, int.MaxValue)]
+        public decimal Price { get; set; }
+
+        [DefaultValue(false)]
+        public bool Negotiable { get; set; }
 
         [Required]
         [StringLength(ValidationConstants.maxMaterialLenght)]

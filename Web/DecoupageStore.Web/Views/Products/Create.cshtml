@@ -52,11 +52,11 @@
     </div>
 
     @section styles{
-        <link href="~/Styles/style-main.css" rel="stylesheet" />
+        @Styles.Render("~/Styles/css")
     }
 
     @section scripts{
-        <script src="~/Scripts/app-scripts/photo-upload-ui-helper.js"></script>
+        @Scripts.Render("~/Scripts/app-scripts/custom")    
         <script>
             $("document").ready(function (event) {
                 $("#upload").change(function (event) {

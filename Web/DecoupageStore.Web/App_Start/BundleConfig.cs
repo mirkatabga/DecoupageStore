@@ -8,8 +8,28 @@ namespace DecoupageStore.Web
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+            RegisterStylesBundles(bundles);
+            RegisterScriptsBundles(bundles);
+        }
+
+        private static void RegisterStylesBundles(BundleCollection bundles)
+        {
+            bundles.Add(new StyleBundle("~/Content/css").Include(
+                      "~/Content/bootstrap.css",
+                      "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/Styles/css").Include(
+                "~/Styles/style-main.css",
+                "~/Styles/style-admin.css"));
+        }
+
+        private static void RegisterScriptsBundles(BundleCollection bundles)
+        {
+            bundles.Add(new Bundle("~/Scripts/app-scripts/custom").Include(
+                "~/Scripts/app-scripts/photo-upload-ui-helper.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+            "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -22,10 +42,6 @@ namespace DecoupageStore.Web
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
-
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
         }
     }
 }

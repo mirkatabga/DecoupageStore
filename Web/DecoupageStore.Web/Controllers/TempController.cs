@@ -1,7 +1,9 @@
 ﻿namespace DecoupageStore.Web.Controllers
 {
+    using Data;
     using Data.Models;
     using Data.Repositories;
+    using Microsoft.AspNet.Identity.EntityFramework;
     using System.IO;
     using System.Web;
     using System.Web.Mvc;
@@ -17,7 +19,7 @@
 
         public ActionResult Index()
         {
-             return View();
+            return View();
         }
 
         [HttpGet]

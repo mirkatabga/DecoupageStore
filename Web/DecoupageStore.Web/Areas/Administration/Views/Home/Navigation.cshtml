@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "Navigation";
+}
+<h2>Admin Panel</h2>
+<hr />
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+        <a href=@Url.Action("Index","Products")>
+            <div class="nav-item-container table-bordered">
+                <img class="img-responsive img-responsive-centered vmargin-20" src="~/Areas/Images/edit_user-.png" />
+                <div class="text-center">Manage Users</div>
+            </div>
+        </a>
+    </div>
+
+    @for (int i = 0; i < 20; i++)
+    {
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <div class="nav-item-container table-bordered"></div>
+        </div>
+    }
+</div>
+
+@section styles{
+    @Styles.Render("~/Styles/css")    
+}

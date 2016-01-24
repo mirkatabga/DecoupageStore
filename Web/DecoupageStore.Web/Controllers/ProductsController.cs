@@ -27,14 +27,15 @@
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
+
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         [ValidateModelState]
         public ActionResult Create(CreateProductModel model)
