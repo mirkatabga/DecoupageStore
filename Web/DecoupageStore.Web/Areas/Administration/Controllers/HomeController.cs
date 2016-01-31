@@ -4,7 +4,7 @@ namespace DecoupageStore.Web.Areas.Administration.Controllers
 {
     public class HomeController : Controller
     {
-        // GET: Administration/Home
+        [Authorize(Roles = "Admin")]
         public ActionResult Navigation()
         {
             return View();

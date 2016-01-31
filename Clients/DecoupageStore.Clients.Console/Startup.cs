@@ -7,31 +7,39 @@
     using System.IO;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Data;
-
+    using System.Collections.Generic;
+    using System.Data.Entity;
     class Startup
     {
         static void Main(string[] args)
         {
-            //    using (DecoupageStoreDbContext dbContext = new DecoupageStoreDbContext())
-            //    {
-            //        IdentityRole adminRole = dbContext.Roles
-            //            .Where(r => r.Name == "Admin")
-            //            .FirstOrDefault();
+            DecoupageStoreDbContext db = new DecoupageStoreDbContext();
 
-            //        User admin = dbContext.Users
-            //            .Where(usr => usr.UserName == "Admin")
-            //            .FirstOrDefault();
+            var l = db.Users
+                 .Select(u => new
+                 {
+                     Roles = u.Roles.Join(db.Roles,
+                         ur => ur.RoleId,
+                         r => r.Id,
+                         (ur, r) => new
+                         {
+                             Role = r.Name
+                         })
+                         .ToList(),
+                     UserName = u.UserName
+                 })
+                 .ToList();
 
-            //        IdentityUserRole userRole = new IdentityUserRole
-            //        {
-            //            RoleId = adminRole.Id,
-            //            UserId = admin.Id
-            //        };
+            foreach (var x in l)
+            {
+                Console.WriteLine();
+                Console.Write(x.UserName + " Roles: ");
 
-            //        admin.Roles.Add(userRole);
-
-            //        dbContext.SaveChanges();
-            //    }
+                foreach (var role in x.Roles)
+                {
+                    Console.Write(role.Role +  " ");
+                }
+            }
         }
     }
 }
