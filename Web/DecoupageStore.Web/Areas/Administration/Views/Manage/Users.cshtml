@@ -1,38 +1,116 @@
 ﻿@using DecoupageStore.Web.Areas.Administration.Models.View
-@model List<UserViewModel>
+@model IEnumerable<UserViewModel>
 @{
     ViewBag.Title = "Users";
 }
 
 <h2>Manage Users</h2>
-<hr />
+<div class="panel-group">
+    @using (Ajax.BeginForm("Search", "Manage",
+                   new AjaxOptions
+                   {
+                       HttpMethod = "POST",
+                       UpdateTargetId = "search-users-container",
+                       InsertionMode = InsertionMode.Replace,
+                   }, new { id="search-form"}))
+    {
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <div id="imaginary_container">
+                        <div class="input-group stylish-input-group">
+                            <input id="textbox-search" name="query" type="text" class="form-control" placeholder="Search">
+                            <span class="input-group-addon">
+                                <button type="submit">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 
-<table class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>Username</th>
-            <th>Roles</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (UserViewModel user in Model)
-        {
-            <tr>
-                <td>
-                    @user.UserName
-                </td>
-                <td>
-                    @foreach (string role in user.Roles)
-                    {
-                        <span class="badge">@role</span>
-                    }
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+    <div id="positioned-container" class="container">
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+                <div id="search-users-container">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="users-container">
+    @Html.Partial("_ListUsersPartial", @Model)
+</div>
 
+@for (int i = 0; i < ViewBag.PagesCount; i++)
+{
+    @Ajax.ActionLink((i + 1).ToString(), "ListUsers", "Manage", new { page = i },
+    new AjaxOptions
+    {
+        HttpMethod = "GET",
+        UpdateTargetId = "users-container",
+        InsertionMode = InsertionMode.Replace
+    }, new { @class = "btn btn-primary" })
+}
 
+@section styles{
+<style type="text/css">
+    #textbox-search{
+        position:relative;
+    }
 
+    #positioned-container {
+        position: absolute;
+    }
+ </style> 
+}
 
+@section scripts{
+    <script type="text/javascript">
+        var $textBoxSearch = $("#textbox-search"),
+            $searchUsersContainer = $("#search-users-container");
 
+        $textBoxSearch.on("input", function (sender, eventArgs) {
+
+            if ($textBoxSearch.val().length == 0) {
+                $searchUsersContainer
+                    .html("")
+                    .hide();
+
+                return;
+            }
+
+            if ($textBoxSearch.val().length < 3) {
+                var ul = $("<ul></ul>"),
+                    li = $("<li></li>")
+                        .addClass("list-group-item")
+                        .text("Enter atleast 3 symbols");
+
+                ul
+                    .addClass("list-group")
+                    .append(li);
+
+               $searchUsersContainer
+                    .html("")
+                    .append(ul)
+                    .show();
+
+                return;
+            }
+
+            $("#search-form").submit();
+            $searchUsersContainer.show();
+        })
+
+        $("body").click(function (sender, evenrArgs) {
+            if (sender.currentTarget.id != $searchUsersContainer.id) {
+                $searchUsersContainer
+                    .html("")
+                    .hide();
+            }
+        })
+    </script>
+}

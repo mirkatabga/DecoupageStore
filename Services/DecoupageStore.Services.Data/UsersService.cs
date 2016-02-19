@@ -10,6 +10,8 @@
     using DecoupageStore.Data.Repositories;
     using DecoupageStore.Data;
     using Models;
+    using System;
+    using System.Collections.Generic;
     public class UsersService : IUsersService
     {
         private readonly IRepository<User> usersRepository;
@@ -47,9 +49,29 @@
                 usersPerPage = GlobalConstants.defaultPageNumber;
             }
 
+            int usersCount = usersRepository
+                .All()
+                .Count();
+
+            int remainder = usersCount % usersPerPage;
+            int pagesCount = usersCount / usersPerPage;
+
+            if (remainder > 0)
+            {
+                pagesCount += 1;
+            }
+
+            return pagesCount;
+        }
+
+        public List<string> SearchUser(string query)
+        {
             return usersRepository
                 .All()
-                .Count() / usersPerPage;
+                .Select(usr => usr.UserName)
+                .Where(name => name.StartsWith(query))
+                .Take(5)
+                .ToList();
         }
     }
 }

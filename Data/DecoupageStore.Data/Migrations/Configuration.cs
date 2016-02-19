@@ -23,26 +23,36 @@ namespace DecoupageStore.Data.Migrations
                 new IdentityRole { Name = "Admin" }
                 );
 
-            string userName = "testuser";
-            List<string> userNames = new List<string>();
-
             UserStore<User> store = new UserStore<User>(context);
-            UserManager<User> manager = new UserManager<User>(store); 
+            UserManager<User> manager = new UserManager<User>(store);
 
-            for (int i = 0; i < 40; i++)
+            string adminRoleId = context.Roles.FirstOrDefault(r => r.Name == "Admin").Id;
+
+            if (!context.Users.Any(u => u.UserName == "Admin"))
             {
-                userNames.Add(userName + i);
+                User admin = new User { UserName = "Admin", Email = "mirkatabga@gmail.com" };
+                admin.Roles.Add(new IdentityUserRole { RoleId = adminRoleId });
+
+                manager.Create(admin, "xristoW93!ai");
             }
 
-            foreach (var username in userNames)
-            {
-                if (!context.Users.Any(usr => usr.UserName == username))
-                {
-                    User user = new User { UserName = username };
+            //string userName = "testuser";
+            //List<string> userNames = new List<string>();
 
-                    manager.Create(user, username + "1");
-                }
-            }
+            //for (int i = 0; i < 2; i++)
+            //{
+            //    userNames.Add(userName + i);
+            //}
+
+            //foreach (var username in userNames)
+            //{
+            //    if (!context.Users.Any(usr => usr.UserName == username))
+            //    {
+            //        User user = new User { UserName = username };
+
+            //        manager.Create(user, username + "1");
+            //    }
+            //}
         }
     }
 }
