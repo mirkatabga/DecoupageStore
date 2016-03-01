@@ -9,6 +9,7 @@
     using Models.View;
     using Services.Data.Contracts;
     using Common.Constants;
+    using Newtonsoft.Json;
 
     [Authorize(Roles = "Admin")]
     public class ManageController : Controller
@@ -44,10 +45,12 @@
                 .ProjectTo<UserViewModel>()
                 .ToList();
 
+            this.ViewBag.PagesCount = usersService.GetPagesCount();
+
             return this.PartialView("_ListUsersPartial", userViewModelsList);
         }
 
-        [HttpPost]
+        [HttpGet]
         public ActionResult Search(string query)
         {
             if (!this.Request.IsAjaxRequest())
@@ -55,9 +58,28 @@
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            List<string> userNamesFound = usersService.SearchUser(query);
+            List<UserViewModel> userViewModelsList = usersService.GetUserNameRolesForPage(query)
+                .ProjectTo<UserViewModel>()
+                .ToList();
 
-            return PartialView("_SearchUserNamesPartial", userNamesFound);
+            this.ViewBag.PagesCount = usersService.GetPagesCount(query);
+
+            return PartialView("_ListUsersPartial", userViewModelsList);
+        }
+
+        [HttpGet]
+        public ActionResult Suggestions(string query)
+        {
+            if (!this.Request.IsAjaxRequest())
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            List<string> usernames = usersService.GetSuggestions(query);
+
+            this.ViewBag.PagesCount = 1;
+
+            return PartialView("_SearchSuggestionsPartial", usernames);
         }
     }
 }

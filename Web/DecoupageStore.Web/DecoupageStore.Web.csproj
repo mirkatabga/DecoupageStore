@@ -285,12 +285,13 @@
     <Content Include="Areas\Administration\Views\Home\Navigation.cshtml" />
     <Content Include="Areas\Administration\Views\Manage\Users.cshtml" />
     <Content Include="Areas\Administration\Views\Shared\_ListUsersPartial.cshtml" />
-    <Content Include="Areas\Administration\Views\Shared\_SearchUserNamesPartial.cshtml" />
+    <Content Include="Areas\Administration\Views\Shared\_SearchSuggestionsPartial.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
     <None Include="Scripts\jquery-2.2.0.intellisense.js" />
+    <Content Include="Scripts\app-scripts\json-requester.js" />
     <Content Include="Scripts\app-scripts\photo-upload-ui-helper.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -359,6 +360,7 @@
     <Content Include="Views\Temp\Upload.cshtml" />
     <Content Include="Styles\style-main.less" />
     <Content Include="Styles\style-admin.less" />
+    <Content Include="Areas\Administration\Views\Shared\_PaginationPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

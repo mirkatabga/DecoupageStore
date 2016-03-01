@@ -1,0 +1,12 @@
+﻿@model int
+
+@for (int i = 0; i < Model; i++)
+{
+    @Ajax.ActionLink((i + 1).ToString(), "ListUsers", "Manage", new { page = i },
+    new AjaxOptions
+    {
+        HttpMethod = "GET",
+        UpdateTargetId = "users-container",
+        InsertionMode = InsertionMode.Replace
+    }, new { @class = "btn btn-primary" })
+}
