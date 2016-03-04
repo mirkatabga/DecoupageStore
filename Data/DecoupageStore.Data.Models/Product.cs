@@ -5,6 +5,7 @@
     using System.ComponentModel.DataAnnotations;
 
     using Common.Constants;
+    using System;
 
     public class Product
     {
@@ -43,6 +44,8 @@
         [Required]
         [Range(ValidationConstants.minDaysToManufacture, ValidationConstants.maxDaysToManufacture)]
         public int DaysToManufacture { get; set; }
+
+        public DateTime DateAdded { get; set; }
 
         public string UserId { get; set; }
 

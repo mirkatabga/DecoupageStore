@@ -36,6 +36,11 @@
 
             foreach (HttpPostedFileBase file in postedFiles)
             {
+                if (file == null)
+                {
+                    continue;
+                }
+
                 string extension = file.FileName
                     .Split('.')
                     .LastOrDefault();

@@ -11,36 +11,40 @@
     using Data.Repositories;
     using Infrastructure.Filters;
     using ViewModels.Create;
+    using Services.Data.Contracts;
 
+    [Authorize(Roles = "Admin,Supplier")]
     public class ProductsController : Controller
     {
         private readonly IRepository<Product> productRepository;
+        private readonly IProductsService productsService;
 
-        public ProductsController(IRepository<Product> productRepository)
+        public ProductsController(IRepository<Product> productRepository, IProductsService productsService)
         {
             this.productRepository = productRepository;
+            this.productsService = productsService;
         }
 
+        [HttpGet]
+        [AllowAnonymous]
         public ActionResult Index()
         {
             return View();
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
         public ActionResult Create()
-
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         [ValidateModelState]
         public ActionResult Create(CreateProductModel model)
         {
             string userId = User.Identity.GetUserId();
+            bool isFirstIteration = true;
 
             Product product = new Product
             {
@@ -48,37 +52,53 @@
                 Category = model.Category,
                 Material = model.Material,
                 DaysToManufacture = model.DaysToManufacture,
-                UserId = userId
+                UserId = userId,
+                DateAdded = DateTime.Now
             };
 
             this.productRepository.Add(product);
             this.productRepository.SaveChanges();
 
-            string directory = Server.MapPath(
-                String.Format(@"~/Images/{0}/Products/{1}/", userId, product.Id));
+            string relativePath = String.Format(@"~/Images/{0}/Products/{1}/", userId, product.Id);
+            string directory = Server.MapPath(relativePath);
 
             Directory.CreateDirectory(directory);
 
             foreach (HttpPostedFileBase image in model.Images)
             {
+                if (image == null)
+                {
+                    continue;
+                }
+
                 string formatExtension = Path.GetExtension(image.FileName);
                 string imageNewName = Guid.NewGuid().ToString() + formatExtension;
-                string fullPath = Path.Combine(directory, imageNewName);
+                string fullpath = Path.Combine(directory, imageNewName);
+                string fullRelativePath = relativePath + imageNewName;
 
-                image.SaveAs(fullPath);
+                image.SaveAs(fullpath);
 
                 product.Images.Add(new ProductImage
                 {
-                    Path = fullPath,
+                    Path = fullRelativePath,
                     ContentType = image.ContentType,
-                    Size = image.InputStream.Length
-                });              
+                    Size = image.InputStream.Length,
+                    IsMain = isFirstIteration ? true : false
+                });
+
+                isFirstIteration = false;              
             }
 
             this.productRepository.SaveChanges();
             this.productRepository.Dispose();
 
             return RedirectToAction("Index", "Products");
+        }
+
+        [AllowAnonymous]
+        public ActionResult Search(string query, string category)
+        {
+            return null;
         }
     }
 }

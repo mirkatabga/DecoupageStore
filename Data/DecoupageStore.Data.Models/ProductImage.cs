@@ -3,7 +3,7 @@
     using System.ComponentModel.DataAnnotations;
 
     using Common.Constants;
-
+    using System.ComponentModel;
     public class ProductImage
     {
         [Key]
@@ -18,6 +18,9 @@
 
         [Required]
         public string ContentType { get; set; }
+
+        [DefaultValue(false)]
+        public bool IsMain { get; set; }
 
         public int ProductId { get; set; }
 

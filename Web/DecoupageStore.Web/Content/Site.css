@@ -23,24 +23,46 @@ textarea {
     max-width: 280px;
 }
 
-.btn-pressed{
-    background-color:dodgerblue;
+.btn-pressed {
+    background-color: dodgerblue;
 }
 
-.stylish-input-group .input-group-addon{
-    background: white !important; 
-}
-.stylish-input-group .form-control{
-	border-right:0; 
-	box-shadow:0 0 0; 
-	border-color:#ccc;
+.stylish-input-group .input-group-addon {
+    background: white !important;
 }
 
-.stylish-input-group input[type=text]{
-	max-width: none;
+.stylish-input-group .form-control {
+    border-right: 0;
+    box-shadow: 0 0 0;
+    border-color: #ccc;
 }
 
-.stylish-input-group button{
-    border:0;
-    background:transparent;
+.stylish-input-group input[type=text] {
+    max-width: none;
+}
+
+.stylish-input-group button {
+    border: 0;
+    background: transparent;
+}
+
+.navbar-nav > li:hover {
+    background-color: #eee;
+}
+
+.search-cate {
+    height: 100%;
+    border: 0;
+    outline: 0;
+}
+
+@media screen and (max-width: 600px) {
+    .search-cate {
+        visibility: hidden;
+        clear: both;
+        float: left;
+        margin: 10px auto 5px 20px;
+        width: 28%;
+        display: none;
+    }
 }

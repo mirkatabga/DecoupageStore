@@ -24,6 +24,11 @@
 
             foreach (var file in postedFiles)
             {
+                if (file == null)
+                {
+                    continue;
+                }
+
                 if (file.ContentLength > maxSize)
                 {
                     this.fileNameForError = file.FileName;
