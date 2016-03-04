@@ -24,15 +24,16 @@
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Material, new { @class = "control-label col-md-2" })
+        @Html.LabelFor(m => m.MaterialId, new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(m => m.Material, new SelectList(new List<string> { "Glass", "Plastic", "Wood" }), new { @class = "form-control" })
+            <select id="materialsSelect" class="form-control" name="MaterialId"></select>
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Category, new { @class = "control-label col-md-2" })
+        @Html.LabelFor(m => m.CategoryId, "Category", new { @class = "control-label col-md-2"})
         <div class="col-md-10">
-            @Html.DropDownListFor(m => m.Category, new SelectList(new List<string> { "Bottle", "Box", "Plate" }), new { @class = "form-control" })
+            @*@Html.DropDownListFor(m => m.Category, new SelectList(new List<string> { "Bottle", "Box", "Plate" }), new { @class = "form-control" })*@
+            <select id="categoriesSelect" class="form-control" name="CategoryId"></select>
         </div>
     </div>
     <div class="form-group">
@@ -65,11 +66,48 @@
         @Scripts.Render("~/Scripts/app-scripts/custom")    
         <script>
             $("document").ready(function (event) {
-                $("#upload").change(function (event) {
-                    var fileNamesStr = fileUploadHelper.getFilesNamesAsOneString(event.currentTarget.files, "*");
-                    $("#tb-files-names").val(fileNamesStr);
-                })
+                $("#upload").change(upload_changed);
+                loadData();
             });
+
+            function upload_changed (event) {
+                var fileNamesStr = fileUploadHelper.getFilesNamesAsOneString(event.currentTarget.files, "*");
+                $("#tb-files-names").val(fileNamesStr);
+            }
+
+            function loadData() {
+                var $categoriesSelect = $('#categoriesSelect'),
+                    $materialsSelect = $('#materialsSelect'),
+                    promises = [];
+
+                var categoriesPromise = jsonRequester.get('/products/categories', {
+                    data: undefined,
+                    headers:
+                        {
+                            Accept: 'text/plain, text/html'
+                        },
+                    dataType: 'html'
+                },
+                'text/plain'),
+                    materialsPromise = jsonRequester.get('/products/materials', {
+                        data: undefined,
+                        headers:
+                            {
+                                Accept: 'text/plain, text/html'
+                            },
+                        dataType: 'html'
+                    },
+                'text/plain');
+
+                promises[0] = categoriesPromise;
+                promises[1] = materialsPromise;
+
+                Promise.all(promises)
+                .then(function (values) {
+                    $categoriesSelect.html(values[0]);
+                    $materialsSelect.html(values[1]);
+                })
+            }
         </script>
     }
 }

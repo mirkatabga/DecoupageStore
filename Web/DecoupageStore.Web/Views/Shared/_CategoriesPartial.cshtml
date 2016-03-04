@@ -1,0 +1,7 @@
+﻿@using DecoupageStore.Web.ViewModels.View
+@model IEnumerable<CategoryViewModel>
+
+@foreach (CategoryViewModel category in Model)
+{
+    <option value=@category.Id>@category.Name</option>
+}

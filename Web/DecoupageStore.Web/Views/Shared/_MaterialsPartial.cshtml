@@ -1,0 +1,7 @@
+﻿@using DecoupageStore.Web.ViewModels.View
+@model IEnumerable<MaterialViewModel>
+
+@foreach (MaterialViewModel material in Model)
+{
+    <option value=@material.Id>@material.Name</option>
+}

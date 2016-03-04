@@ -22,12 +22,12 @@
         public bool Negotiable { get; set; }
 
         [Required]
-        [StringLength(ValidationConstants.maxMaterialLenght)]
-        public string Material { get; set; }
+        [Range(1, int.MaxValue)]
+        public int MaterialId { get; set; }
 
         [Required]
-        [StringLength(ValidationConstants.maxCategoryLenght)]
-        public string Category { get; set; }
+        [Range(1, int.MaxValue)]
+        public int CategoryId { get; set; }
 
         [Required]
         [Range(ValidationConstants.minDaysToManufacture, ValidationConstants.maxDaysToManufacture)]

@@ -9,6 +9,7 @@
         public static void RegisterDatabase()
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<DecoupageStoreDbContext, Configuration>());
+            //Database.SetInitializer(new DropCreateDatabaseAlways<DecoupageStoreDbContext>());
         }
     }
 }

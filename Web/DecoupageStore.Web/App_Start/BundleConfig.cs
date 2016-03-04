@@ -26,7 +26,8 @@ namespace DecoupageStore.Web
         private static void RegisterScriptsBundles(BundleCollection bundles)
         {
             bundles.Add(new Bundle("~/Scripts/app-scripts/custom").Include(
-                "~/Scripts/app-scripts/photo-upload-ui-helper.js"));
+                "~/Scripts/app-scripts/photo-upload-ui-helper.js",
+                "~/Scripts/app-scripts/json-requester.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
             "~/Scripts/jquery-{version}.js"));

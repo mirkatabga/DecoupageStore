@@ -30,14 +30,6 @@
         public bool Negotiable { get; set; }
 
         [Required]
-        [StringLength(ValidationConstants.maxMaterialLenght)]
-        public string Material { get; set; }
-
-        [Required]
-        [StringLength(ValidationConstants.maxCategoryLenght)]
-        public string Category { get; set; }
-
-        [Required]
         [DefaultValue(false)]
         public bool FinishedGoodsFlag { get; set; }
 
@@ -50,6 +42,14 @@
         public string UserId { get; set; }
 
         public virtual User User { get; set; }
+
+        public int CategoryId { get; set; }
+
+        public virtual Category Category { get; set; }
+
+        public int MaterialId { get; set; }
+
+        public virtual Material Material { get; set; }
 
         public virtual ICollection<ProductImage> Images
         {

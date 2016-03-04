@@ -20,5 +20,9 @@
         public IDbSet<Product> Products { get; set; }
 
         public IDbSet<ProductImage> ProductImages { get; set; }
+
+        public IDbSet<Category> Categories { get; set; }
+
+        public IDbSet<Material> Materials { get; set; }
     }
 }

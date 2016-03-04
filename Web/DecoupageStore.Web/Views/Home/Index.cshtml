@@ -1,4 +1,5 @@
-﻿@{
+﻿@model  IEnumerable<DecoupageStore.Web.ViewModels.View.CategoryViewModel>
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -14,9 +15,7 @@
                             <span style="padding:0" class="input-group-addon">
                                 <select id="search-dropdown-box" class="search-cate" name="category">
                                     <option value="0">All Categories</option>
-                                    <option value="1">Bottle</option>
-                                    <option value="2">Box</option>
-                                    <option value="3">Plate</option>
+                                    @Html.Partial("_CategoriesPartial", Model)
                                 </select>
                             </span>
                             <span class="input-group-addon">

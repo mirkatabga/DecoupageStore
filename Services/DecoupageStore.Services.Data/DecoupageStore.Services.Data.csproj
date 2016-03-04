@@ -57,8 +57,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CategoriesService.cs" />
+    <Compile Include="Contracts\ICategoriesService.cs" />
+    <Compile Include="Contracts\IMaterialsService.cs" />
     <Compile Include="Contracts\IProductsService.cs" />
     <Compile Include="Contracts\IUsersService.cs" />
+    <Compile Include="MaterialsService.cs" />
     <Compile Include="Models\UserNameRoleModel.cs" />
     <Compile Include="ProductsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
