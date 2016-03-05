@@ -1,6 +1,4 @@
-﻿
-
-namespace DecoupageStore.Web.Controllers
+﻿namespace DecoupageStore.Web.Controllers
 {
     using AutoMapper.QueryableExtensions;
     using DecoupageStore.Data.Models;
@@ -29,20 +27,6 @@ namespace DecoupageStore.Web.Controllers
                 .ToList();
 
             return View(categories);
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
         }
     }
 }

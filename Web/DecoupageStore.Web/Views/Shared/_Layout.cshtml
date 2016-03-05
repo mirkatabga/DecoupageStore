@@ -24,8 +24,16 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home", routeValues: new { area = "" }, htmlAttributes: null)</li>
-                    <li>@Html.ActionLink("About", "About", "Home", routeValues: new { area = "" }, htmlAttributes: null)</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home", routeValues: new { area = "" }, htmlAttributes: null)</li>
+                    <li>@Html.ActionLink("Products", "Index", "Products", routeValues: new { area = "" }, htmlAttributes: null)</li>
+                    @if (User.IsInRole("Admin") || User.IsInRole("Supplier"))
+                    {
+                        <li>@Html.ActionLink("Create Product", "Create", "Products", routeValues: new { area = "" }, htmlAttributes: null)</li>
+
+                        if (User.IsInRole("Admin"))
+                        {
+                            <li>@Html.ActionLink("Administration", "Navigation", "Home", routeValues: new { area = "Administration" }, htmlAttributes: null)</li>
+                        }
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

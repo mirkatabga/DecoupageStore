@@ -7,6 +7,9 @@
 
     <ul class="nav navbar-nav navbar-right">
         <li>
+            <a href="/Cart/Index" class="glyphicon glyphicon-shopping-cart"></a>
+        </li>
+        <li>
             @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: new { area = "" }, htmlAttributes: new { title = "Manage" })
         </li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
@@ -16,6 +19,9 @@
 else
 {
     <ul class="nav navbar-nav navbar-right">
+        <li>
+            <a href="/Cart/Index" class="glyphicon glyphicon-shopping-cart"></a>
+        </li>
         <li>@Html.ActionLink("Register", "Register", "Account", routeValues: new { area = "" }, htmlAttributes: new { id = "registerLink" })</li>
         <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: new { area = "" }, htmlAttributes: new { id = "loginLink" })</li>
     </ul>

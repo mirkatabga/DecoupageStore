@@ -1,7 +1,39 @@
-﻿
+﻿@model IEnumerable<DecoupageStore.Web.ViewModels.View.ListProductViewModel>
+
 @{
     ViewBag.Title = "Products";
 }
 
 <h2>Products</h2>
 
+@Html.Partial("_ListProductsPartial", Model)
+
+@section scripts{
+    @Scripts.Render("~/Scripts/app-scripts/custom");
+    <script type="text/javascript">
+        $(document).ready(documentReady);
+
+        function documentReady() {
+            $("p.btn.btn-add-to-cart a.hidden-sm").on('click', addToCartBtn_clicked);
+        }
+
+        function addToCartBtn_clicked(e) {
+            var id = e.target.getAttribute('data-id');
+            var url = "/Cart/Add";
+            
+            jsonRequester.post(url, { data: { id: parseInt(id) }, dataType: 'text' }, "application/x-www-form-urlencoded; charset=UTF-8")
+            .then(function (response) {
+                console.log('success');
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log('error');
+                console.log(error);
+            })
+
+            //$.post(url, { id: id }, function (data) {
+            //    console.log(data);
+            //});
+        }
+    </script>
+}

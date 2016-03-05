@@ -37,7 +37,12 @@
         [AllowAnonymous]
         public ActionResult Index()
         {
-            return View();
+            List<ListProductViewModel> products = productsService
+                .GetProducts(1, 12)
+                .ProjectTo<ListProductViewModel>()
+                .ToList();
+
+            return View(products);
         }
 
         [HttpGet]
@@ -59,6 +64,7 @@
                 Name = model.Name,
                 CategoryId = model.CategoryId,
                 MaterialId = model.MaterialId,
+                Price = model.Price,
                 DaysToManufacture = model.DaysToManufacture,
                 UserId = userId,
                 DateAdded = DateTime.Now
@@ -76,7 +82,18 @@
             {
                 if (image == null)
                 {
-                    continue;
+                    if (model.Images.Count() == 1)
+                    {
+                        product.Images.Add(new ProductImage
+                        {
+                            Path = "~/Content/Images/image-not-found.png",
+                            ContentType = "image/png",
+                            IsMain = true,
+                            Size = 104000
+                        });
+
+                        break;
+                    }
                 }
 
                 string formatExtension = Path.GetExtension(image.FileName);
@@ -93,8 +110,6 @@
                     Size = image.InputStream.Length,
                     IsMain = isFirstIteration ? true : false
                 });
-
-                isFirstIteration = false;
             }
 
             this.productRepository.SaveChanges();

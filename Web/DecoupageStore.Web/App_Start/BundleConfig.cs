@@ -16,7 +16,8 @@ namespace DecoupageStore.Web
         {
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/Site.css",
+                      "~/Content/Products.css"));
 
             bundles.Add(new StyleBundle("~/Styles/css").Include(
                 "~/Styles/style-main.css",
