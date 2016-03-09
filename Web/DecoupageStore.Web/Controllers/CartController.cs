@@ -49,5 +49,12 @@
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
+
+        public ActionResult Buy()
+        {
+            this.Session["cart"] = null;
+
+            return View();
+        }
     }
 }

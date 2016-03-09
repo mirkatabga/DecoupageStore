@@ -6,6 +6,9 @@
     public interface IProductsService
     {
         IQueryable<Product> GetProducts(int page, int count);
+
         Product GetById(int id);
+
+        IQueryable<Product> Search(string query, int categoryId);
     }
 }

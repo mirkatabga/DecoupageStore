@@ -2,38 +2,46 @@
 
 <div class="container">
     <div class="row">
-        @foreach (var product in Model)
+        @if (Model == null)
         {
-            <div class="col-sm-3">
-                <div class="col-item">
-                    <div class="photo">
-                        <img src="@Url.Content(product.MainImage.Path)" class="img-responsive" alt="img" />
-                    </div>
-                    <div class="info">
-                        <div class="row">
-                            <div class="price col-md-6">
-                                <h5>
-                                    @product.Name
-                                </h5>
-                                <h5 class="price-text-color">
-                                    @product.Price
-                                </h5>
+            <div class="col-md-12">No products that matches your search was found.</div>
+        }
+        else
+        {
+            foreach (var product in Model)
+            {
+                <div class="col-sm-3 col-md-3 col-lg-3">
+                    <div class="col-item">
+                        <div class="photo">
+                            <img src="@Url.Content(product.MainImage.Path)" class="img-responsive" alt="img" style="height:220px" />
+                        </div>
+                        <div class="info">
+                            <div class="row">
+                                <div class="price col-md-12 col-sm-12 col-lg-12">
+                                    <h5>
+                                        @product.Name
+                                    </h5>
+                                    <h5 class="price-text-color">
+                                        @product.Price
+                                    </h5>
+                                </div>
                             </div>
-                        </div>
-                        <div class="separator clear-left">
-                            <p class="btn btn-add-to-cart">
-                                <i class="fa fa-shopping-cart"></i><a href="#" class="hidden-sm" data-id=@product.Id>Add to cart</a>
-                            </p>
-                            <p class="btn btn-details">
-                                <i class="fa fa-list"></i><a href="http://www.google.com" class="hidden-sm">More Details</a>
-                            </p>
-                        </div>
-                        <div class="clearfix">
+                            <div class="separator clear-left">
+                                <p class="btn btn-add-to-cart">
+                                    <i class="fa fa-shopping-cart"></i><a href="#" class="hidden-sm" data-id=@product.Id>Add to cart</a>
+                                </p>
+                                <p class="btn btn-details">
+                                    <i class="fa fa-list"></i><a href="http://www.google.com" class="hidden-sm">More Details</a>
+                                </p>
+                            </div>
+                            <div class="clearfix">
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            }
         }
+
     </div>
 </div>
 

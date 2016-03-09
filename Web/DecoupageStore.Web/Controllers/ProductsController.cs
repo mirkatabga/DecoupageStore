@@ -153,7 +153,11 @@
         [AllowAnonymous]
         public ActionResult Search(string query, string category)
         {
-            return null;
+            List<ListProductViewModel> products = this.productsService.Search(query, int.Parse(category))
+                .ProjectTo<ListProductViewModel>()
+                .ToList();
+
+            return View("Index", products);
         }
     }
 }

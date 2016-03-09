@@ -22,7 +22,8 @@ namespace DecoupageStore.Data.Migrations
             {
                 new Category { Name = "Bottles" },
                 new Category { Name = "Boxes" },
-                new Category { Name = "Plates" }
+                new Category { Name = "Plates" },
+                new Category {Name = "Mural" }
             };
 
             Material[] materials =
